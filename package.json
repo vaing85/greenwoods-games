@@ -1,0 +1,21 @@
+{
+  "name": "greenwood-games",
+  "version": "1.0.0",
+  "description": "Greenwood Games - A comprehensive casino game platform with web and mobile interfaces",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run web:dev\"",
+    "server:dev": "cd server; npm run dev",
+    "web:dev": "cd web; npm start",
+    "mobile:dev": "cd mobile; npm start",
+    "install:all": "npm install; cd server; npm install; cd ../web; npm install; cd ../mobile; npm install",
+    "build": "cd web; npm run build",
+    "start": "cd server; npm start"
+  },
+  "keywords": ["casino", "games", "react", "react-native", "nodejs"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

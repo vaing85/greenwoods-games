@@ -1,0 +1,472 @@
+/* Baccarat Game Styles */
+.baccarat-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f5132 0%, #1a5f3a 100%);
+  color: white;
+  padding: 20px;
+}
+
+.login-required {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  text-align: center;
+}
+
+.login-required h2 {
+  color: #ffd700;
+  margin-bottom: 15px;
+}
+
+.baccarat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #ffd700;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.baccarat-header h2 {
+  margin: 0;
+  color: #ffd700;
+  font-size: 2.5rem;
+}
+
+.game-info {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.game-info span {
+  color: #cbd5e0;
+  font-weight: bold;
+}
+
+.balance {
+  color: #48bb78 !important;
+}
+
+.phase {
+  color: #ffd700 !important;
+  text-transform: capitalize;
+}
+
+/* Game Table */
+.baccarat-game {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.baccarat-table {
+  background: rgba(0, 100, 0, 0.8);
+  border: 3px solid #ffd700;
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 30px;
+  display: grid;
+  grid-template-areas: 
+    "banker center banker"
+    "player center player";
+  grid-template-columns: 1fr 300px 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  min-height: 400px;
+}
+
+.hand-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.banker-section {
+  grid-area: banker;
+}
+
+.player-section {
+  grid-area: player;
+}
+
+.hand-section h3 {
+  margin: 0 0 15px 0;
+  color: #ffd700;
+  font-size: 1.3rem;
+}
+
+.cards {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.card {
+  width: 60px;
+  height: 90px;
+  background: white;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+  position: relative;
+}
+
+.card.red {
+  color: #dc2626;
+}
+
+.card.black {
+  color: #1f2937;
+}
+
+.card-value {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.card-suit {
+  font-size: 1.5rem;
+}
+
+.card.face-down {
+  background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+  color: white;
+}
+
+.card-back {
+  font-size: 2rem;
+}
+
+.hand-total {
+  color: #ffd700;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.table-center {
+  grid-area: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.game-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.game-status span {
+  font-size: 1.2rem;
+  color: #ffd700;
+  font-weight: bold;
+}
+
+.game-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.winner {
+  font-size: 1.5rem;
+  color: #48bb78;
+  font-weight: bold;
+}
+
+.new-game-btn {
+  background: linear-gradient(45deg, #ffd700, #ffed4e);
+  color: #1a202c;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.new-game-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+}
+
+/* Betting Area */
+.betting-area {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  margin-bottom: 20px;
+}
+
+.bet-controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.bet-amount-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bet-amount-controls label {
+  color: #cbd5e0;
+  font-weight: bold;
+}
+
+.bet-amount-controls input {
+  width: 100px;
+  padding: 8px;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  text-align: center;
+}
+
+.bet-amount-controls input:focus {
+  outline: none;
+  border-color: #ffd700;
+}
+
+.betting-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.bet-option {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.bet-option:hover {
+  border-color: #ffd700;
+  background: rgba(255, 215, 0, 0.1);
+}
+
+.bet-option.selected {
+  border-color: #48bb78;
+  background: rgba(72, 187, 120, 0.2);
+  box-shadow: 0 0 20px rgba(72, 187, 120, 0.3);
+}
+
+.bet-option h4 {
+  margin: 0 0 10px 0;
+  color: #ffd700;
+  font-size: 1.2rem;
+}
+
+.bet-option p {
+  margin: 0 0 15px 0;
+  color: #cbd5e0;
+  font-size: 0.9rem;
+}
+
+.bet-amount {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #48bb78;
+}
+
+.player-bet:hover {
+  border-color: #3b82f6;
+}
+
+.banker-bet:hover {
+  border-color: #dc2626;
+}
+
+.tie-bet:hover {
+  border-color: #8b5cf6;
+}
+
+.deal-btn {
+  width: 100%;
+  background: linear-gradient(45deg, #48bb78, #38a169);
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.deal-btn:hover {
+  background: linear-gradient(45deg, #38a169, #2f855a);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(72, 187, 120, 0.4);
+}
+
+/* Game History */
+.game-history {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  margin-bottom: 20px;
+}
+
+.game-history h4 {
+  margin: 0 0 15px 0;
+  color: #ffd700;
+}
+
+.history-items {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.history-item {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.history-item.player {
+  background: #3b82f6;
+  color: white;
+}
+
+.history-item.banker {
+  background: #dc2626;
+  color: white;
+}
+
+.history-item.tie {
+  background: #8b5cf6;
+  color: white;
+}
+
+/* Game Rules */
+.game-rules {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.game-rules h4 {
+  margin: 0 0 15px 0;
+  color: #ffd700;
+}
+
+.game-rules ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.game-rules li {
+  margin-bottom: 8px;
+  color: #cbd5e0;
+  line-height: 1.5;
+}
+
+.game-rules strong {
+  color: #ffd700;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .baccarat-container {
+    padding: 15px;
+  }
+  
+  .baccarat-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .baccarat-table {
+    grid-template-areas: 
+      "banker"
+      "center"
+      "player";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    padding: 20px;
+  }
+  
+  .betting-options {
+    grid-template-columns: 1fr;
+  }
+  
+  .bet-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .cards {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .card {
+    width: 50px;
+    height: 75px;
+  }
+  
+  .card-value {
+    font-size: 1rem;
+  }
+  
+  .card-suit {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .baccarat-header h2 {
+    font-size: 2rem;
+  }
+  
+  .hand-section {
+    padding: 15px;
+  }
+  
+  .bet-option {
+    padding: 15px;
+  }
+  
+  .bet-option h4 {
+    font-size: 1.1rem;
+  }
+  
+  .history-items {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,501 @@
+/* Video Poker Game Styles */
+.video-poker-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #4c1d95 0%, #581c87 100%);
+  color: white;
+  padding: 20px;
+}
+
+.login-required {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  text-align: center;
+}
+
+.login-required h2 {
+  color: #ffd700;
+  margin-bottom: 15px;
+}
+
+.video-poker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #ffd700;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.video-poker-header h2 {
+  margin: 0;
+  color: #ffd700;
+  font-size: 2.5rem;
+}
+
+.game-info {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.game-info span {
+  color: #cbd5e0;
+  font-weight: bold;
+}
+
+.balance {
+  color: #48bb78 !important;
+}
+
+.credits {
+  color: #ffd700 !important;
+}
+
+/* Game Layout */
+.video-poker-game {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Variant Selection */
+.variant-selection {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.variant-selection h4 {
+  margin: 0 0 15px 0;
+  color: #ffd700;
+}
+
+.variant-options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.variant-btn {
+  padding: 8px 16px;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.variant-btn:hover:not(:disabled) {
+  border-color: #ffd700;
+  background: rgba(255, 215, 0, 0.1);
+}
+
+.variant-btn.active {
+  border-color: #48bb78;
+  background: rgba(72, 187, 120, 0.2);
+  color: #48bb78;
+}
+
+.variant-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Cards Area */
+.cards-area {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 30px;
+  text-align: center;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.hand-display {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.hold-indicator {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #e53e3e;
+  min-height: 20px;
+}
+
+.hold-indicator.held {
+  color: #48bb78;
+}
+
+.card {
+  width: 90px;
+  height: 130px;
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 3px solid transparent;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.card.held {
+  border-color: #48bb78;
+  box-shadow: 0 0 20px rgba(72, 187, 120, 0.5);
+}
+
+.card.red {
+  color: #dc2626;
+}
+
+.card.black {
+  color: #1f2937;
+}
+
+.card-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.card-suit {
+  font-size: 2rem;
+}
+
+.card-back {
+  font-size: 3rem;
+  color: #1e3a8a;
+}
+
+.win-display {
+  background: linear-gradient(45deg, #48bb78, #38a169);
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.win-hand {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.win-amount {
+  font-size: 1.1rem;
+  color: #ffd700;
+}
+
+/* Game Controls */
+.game-controls {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.betting-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.bet-amount-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.bet-amount-controls label {
+  color: #cbd5e0;
+  font-weight: bold;
+}
+
+.bet-amount-controls input[type="range"] {
+  width: 150px;
+}
+
+.bet-display {
+  color: #ffd700;
+  font-weight: bold;
+  font-size: 1.2rem;
+  min-width: 20px;
+  text-align: center;
+}
+
+.bet-btn,
+.deal-btn,
+.draw-btn,
+.new-game-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.bet-btn {
+  background: linear-gradient(45deg, #ffd700, #ffed4e);
+  color: #1a202c;
+}
+
+.deal-btn,
+.draw-btn {
+  background: linear-gradient(45deg, #48bb78, #38a169);
+  color: white;
+}
+
+.new-game-btn {
+  background: linear-gradient(45deg, #3b82f6, #2563eb);
+  color: white;
+}
+
+.bet-btn:hover,
+.deal-btn:hover,
+.draw-btn:hover,
+.new-game-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.draw-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.instructions {
+  color: #cbd5e0;
+  font-style: italic;
+}
+
+.result-controls {
+  display: flex;
+  justify-content: center;
+}
+
+/* Paytable */
+.paytable {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.paytable h4 {
+  margin: 0 0 20px 0;
+  color: #ffd700;
+  text-align: center;
+}
+
+.paytable-grid {
+  display: grid;
+  grid-template-columns: 2fr repeat(5, 1fr);
+  gap: 1px;
+  background: rgba(255, 215, 0, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.paytable-header,
+.paytable-row {
+  display: contents;
+}
+
+.paytable-header > div,
+.paytable-row > div {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.paytable-header > div {
+  background: rgba(255, 215, 0, 0.2);
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.hand-name {
+  text-align: left !important;
+  font-weight: bold;
+}
+
+.bet-column.current-bet,
+.payout.current-bet {
+  background: rgba(72, 187, 120, 0.3) !important;
+  color: #48bb78;
+  font-weight: bold;
+}
+
+.payout {
+  color: #cbd5e0;
+}
+
+/* Game Rules */
+.game-rules {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.game-rules h4 {
+  margin: 0 0 15px 0;
+  color: #ffd700;
+}
+
+.rules-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.rule-section h5 {
+  margin: 0 0 10px 0;
+  color: #ffd700;
+  font-size: 1rem;
+}
+
+.rule-section ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.rule-section li {
+  margin-bottom: 5px;
+  color: #cbd5e0;
+  line-height: 1.4;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .video-poker-container {
+    padding: 15px;
+  }
+  
+  .video-poker-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .hand-display {
+    gap: 8px;
+  }
+  
+  .card {
+    width: 70px;
+    height: 100px;
+  }
+  
+  .card-value {
+    font-size: 1.2rem;
+  }
+  
+  .card-suit {
+    font-size: 1.5rem;
+  }
+  
+  .betting-controls {
+    gap: 10px;
+  }
+  
+  .bet-amount-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .paytable-grid {
+    grid-template-columns: 1.5fr repeat(5, 1fr);
+    font-size: 0.8rem;
+  }
+  
+  .paytable-header > div,
+  .paytable-row > div {
+    padding: 6px 4px;
+  }
+  
+  .variant-options {
+    justify-content: center;
+  }
+  
+  .variant-btn {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .video-poker-header h2 {
+    font-size: 2rem;
+  }
+  
+  .hand-display {
+    gap: 5px;
+  }
+  
+  .card {
+    width: 60px;
+    height: 85px;
+  }
+  
+  .card-value {
+    font-size: 1rem;
+  }
+  
+  .card-suit {
+    font-size: 1.2rem;
+  }
+  
+  .bet-amount-controls input[type="range"] {
+    width: 120px;
+  }
+  
+  .paytable-grid {
+    font-size: 0.7rem;
+  }
+  
+  .paytable-header > div,
+  .paytable-row > div {
+    padding: 4px 2px;
+  }
+  
+  .rules-content {
+    grid-template-columns: 1fr;
+  }
+}

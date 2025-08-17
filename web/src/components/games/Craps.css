@@ -1,0 +1,488 @@
+/* Craps Game Styles */
+.craps-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+  color: white;
+  padding: 20px;
+}
+
+.login-required {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  text-align: center;
+}
+
+.login-required h2 {
+  color: #ffd700;
+  margin-bottom: 15px;
+}
+
+.craps-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #ffd700;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.craps-header h2 {
+  margin: 0;
+  color: #ffd700;
+  font-size: 2.5rem;
+}
+
+.game-info {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.game-info span {
+  color: #cbd5e0;
+  font-weight: bold;
+}
+
+.balance {
+  color: #48bb78 !important;
+}
+
+.phase {
+  color: #ffd700 !important;
+  text-transform: capitalize;
+}
+
+/* Game Layout */
+.craps-game {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Dice Area */
+.dice-area {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 30px;
+  text-align: center;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.dice-display {
+  margin-bottom: 20px;
+}
+
+.dice-container,
+.no-roll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.dice-container > div:first-child,
+.no-roll > div:first-child {
+  display: flex;
+  gap: 20px;
+}
+
+.die {
+  width: 80px;
+  height: 80px;
+  background: white;
+  color: #1a202c;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  border: 2px solid #d1d5db;
+}
+
+.die.rolling {
+  animation: roll 0.5s ease-in-out;
+}
+
+@keyframes roll {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(90deg); }
+  50% { transform: rotate(180deg); }
+  75% { transform: rotate(270deg); }
+}
+
+.roll-total {
+  font-size: 1.5rem;
+  color: #ffd700;
+  font-weight: bold;
+}
+
+.ready-text {
+  color: #cbd5e0;
+  font-style: italic;
+}
+
+.roll-controls {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.roll-btn,
+.clear-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.roll-btn {
+  background: linear-gradient(45deg, #48bb78, #38a169);
+  color: white;
+}
+
+.roll-btn:hover:not(:disabled) {
+  background: linear-gradient(45deg, #38a169, #2f855a);
+  transform: translateY(-2px);
+}
+
+.roll-btn:disabled {
+  background: #4a5568;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.clear-btn {
+  background: linear-gradient(45deg, #e53e3e, #c53030);
+  color: white;
+}
+
+.clear-btn:hover:not(:disabled) {
+  background: linear-gradient(45deg, #c53030, #9c2626);
+  transform: translateY(-2px);
+}
+
+/* Betting Controls */
+.bet-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.bet-amount-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bet-amount-controls label {
+  color: #cbd5e0;
+  font-weight: bold;
+}
+
+.bet-amount-controls input {
+  width: 100px;
+  padding: 8px;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  text-align: center;
+}
+
+.bet-amount-controls input:focus {
+  outline: none;
+  border-color: #ffd700;
+}
+
+.total-bet {
+  color: #ffd700;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Betting Table */
+.betting-table {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.main-bets {
+  margin-bottom: 30px;
+}
+
+.bet-section {
+  margin-bottom: 20px;
+}
+
+.bet-section h4 {
+  margin: 0 0 15px 0;
+  color: #ffd700;
+  font-size: 1.2rem;
+}
+
+.bet-options {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.bet-option {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  border-radius: 12px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 150px;
+  text-align: center;
+}
+
+.bet-option:hover {
+  border-color: #ffd700;
+  background: rgba(255, 215, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.bet-name {
+  font-weight: bold;
+  color: #ffd700;
+  margin-bottom: 5px;
+}
+
+.bet-payout {
+  color: #48bb78;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.bet-amount {
+  color: #cbd5e0;
+  font-weight: bold;
+}
+
+.bet-numbers {
+  color: #cbd5e0;
+  font-size: 0.8rem;
+  margin-bottom: 5px;
+}
+
+/* Specific bet styling */
+.pass-line {
+  border-color: rgba(72, 187, 120, 0.5) !important;
+}
+
+.pass-line:hover {
+  border-color: #48bb78 !important;
+}
+
+.dont-pass {
+  border-color: rgba(239, 68, 68, 0.5) !important;
+}
+
+.dont-pass:hover {
+  border-color: #ef4444 !important;
+}
+
+.field-bet {
+  border-color: rgba(139, 92, 246, 0.5) !important;
+  min-width: 200px;
+}
+
+.field-bet:hover {
+  border-color: #8b5cf6 !important;
+}
+
+/* Proposition Bets */
+.prop-bets h4 {
+  margin: 0 0 15px 0;
+  color: #ffd700;
+  font-size: 1.2rem;
+}
+
+.prop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+}
+
+.prop-bet {
+  min-width: auto;
+  border-color: rgba(251, 191, 36, 0.5) !important;
+}
+
+.prop-bet:hover {
+  border-color: #fbbf24 !important;
+}
+
+/* Roll History */
+.roll-history {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.roll-history h4 {
+  margin: 0 0 15px 0;
+  color: #ffd700;
+}
+
+.history-rolls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.history-roll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 10px;
+  min-width: 60px;
+}
+
+.roll-dice {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 5px;
+}
+
+.mini-die {
+  font-size: 1rem;
+}
+
+.history-roll .roll-total {
+  font-size: 0.9rem;
+  color: #ffd700;
+  font-weight: bold;
+}
+
+/* Game Rules */
+.game-rules {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.game-rules h4 {
+  margin: 0 0 15px 0;
+  color: #ffd700;
+}
+
+.rules-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.rule-section h5 {
+  margin: 0 0 10px 0;
+  color: #ffd700;
+  font-size: 1rem;
+}
+
+.rule-section ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.rule-section li {
+  margin-bottom: 5px;
+  color: #cbd5e0;
+  line-height: 1.4;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .craps-container {
+    padding: 15px;
+  }
+  
+  .craps-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .bet-controls {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .bet-options {
+    justify-content: center;
+  }
+  
+  .prop-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .die {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
+  
+  .rules-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .craps-header h2 {
+    font-size: 2rem;
+  }
+  
+  .dice-container > div:first-child,
+  .no-roll > div:first-child {
+    gap: 10px;
+  }
+  
+  .die {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+  
+  .bet-option {
+    min-width: 120px;
+    padding: 10px;
+  }
+  
+  .prop-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .roll-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .roll-btn,
+  .clear-btn {
+    width: 100%;
+  }
+}

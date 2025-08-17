@@ -1,0 +1,37 @@
+{
+  "name": "greenwood-games-deploy",
+  "version": "1.0.0",
+  "description": "Production deployment scripts for Greenwood Games",
+  "scripts": {
+    "deploy:build": "npm run build:all && npm run docker:build",
+    "deploy:start": "docker-compose -f docker-compose.prod.yml up -d",
+    "deploy:stop": "docker-compose -f docker-compose.prod.yml down",
+    "deploy:restart": "npm run deploy:stop && npm run deploy:start",
+    "deploy:logs": "docker-compose -f docker-compose.prod.yml logs -f",
+    "deploy:status": "docker-compose -f docker-compose.prod.yml ps",
+    "build:all": "npm run build:server && npm run build:web && npm run build:mobile",
+    "build:server": "cd server && npm install --production",
+    "build:web": "cd web && npm install && npm run build",
+    "build:mobile": "cd mobile && npm install && npx expo export --platform web",
+    "docker:build": "docker-compose -f docker-compose.prod.yml build",
+    "docker:pull": "docker-compose -f docker-compose.prod.yml pull",
+    "backup:db": "docker exec greenwood-mongodb mongodump --out /data/backup/$(date +%Y%m%d_%H%M%S)",
+    "restore:db": "docker exec greenwood-mongodb mongorestore /data/backup/$BACKUP_NAME",
+    "ssl:generate": "scripts/generate-ssl.sh",
+    "ssl:renew": "scripts/renew-ssl.sh",
+    "health:check": "curl -f http://localhost/health || exit 1",
+    "monitor:start": "docker-compose -f docker-compose.monitoring.yml up -d",
+    "monitor:stop": "docker-compose -f docker-compose.monitoring.yml down",
+    "security:scan": "npm audit && docker run --rm -v $(pwd):/app aquasec/trivy filesystem /app",
+    "test:production": "npm run test:load && npm run test:security",
+    "test:load": "artillery run tests/load-test.yml",
+    "test:security": "npm run security:scan",
+    "migrate:up": "cd server && npm run migrate:up",
+    "migrate:down": "cd server && npm run migrate:down",
+    "seed:production": "cd server && npm run seed:production"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "artillery": "^2.0.0"
+  }
+}
