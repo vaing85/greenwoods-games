@@ -51,6 +51,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(generalLimiter);
 }
 app.use(requestLogger);
+app.set('trust proxy', 1); // Trust proxy for rate limiting behind nginx
 app.use(cors(corsOptions));
 app.use(express.json({ limit: process.env.UPLOAD_LIMIT || '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: process.env.UPLOAD_LIMIT || '10mb' }));
@@ -126,6 +127,67 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log('User disconnected:', socket.id);
+  });
+
+  // River777 Games Events
+  
+  // Fish Hunter game events
+  socket.on('fishCaught', (data) => {
+    const { points, earnings } = data;
+    console.log(`Fish caught: ${points} points, ${earnings} earnings`);
+    
+    // Broadcast to other players in the same game
+    socket.to('fish-hunter').emit('playerCaughtFish', {
+      playerId: socket.id,
+      points,
+      earnings
+    });
+  });
+
+  // Dragon Tiger game events
+  socket.on('dragonTigerWin', (data) => {
+    const { bet, winAmount, winner } = data;
+    console.log(`Dragon Tiger win: ${winner}, bet: ${bet}, won: ${winAmount}`);
+    
+    // Broadcast win to other players
+    socket.to('dragon-tiger').emit('bigWin', {
+      playerId: socket.id,
+      game: 'Dragon Tiger',
+      winner,
+      winAmount
+    });
+  });
+
+  // Wheel of Fortune game events
+  socket.on('wheelWin', (data) => {
+    const { prize, winAmount, betAmount } = data;
+    console.log(`Wheel win: ${prize}, bet: ${betAmount}, won: ${winAmount}`);
+    
+    // Broadcast big wins to all players
+    if (winAmount >= 1000) {
+      io.emit('megaWin', {
+        playerId: socket.id,
+        game: 'Wheel of Fortune',
+        prize,
+        winAmount
+      });
+    }
+  });
+
+  // Join specific River777 game rooms
+  socket.on('joinFishHunter', () => {
+    socket.join('fish-hunter');
+    console.log(`Player ${socket.id} joined Fish Hunter room`);
+  });
+
+  socket.on('joinDragonTiger', () => {
+    socket.join('dragon-tiger');
+    console.log(`Player ${socket.id} joined Dragon Tiger room`);
+  });
+
+  socket.on('joinWheelFortune', () => {
+    socket.join('wheel-fortune');
+    console.log(`Player ${socket.id} joined Wheel of Fortune room`);
   });
 });
 

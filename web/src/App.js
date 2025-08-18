@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import io from 'socket.io-client';
 import Header from './components/Header';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
@@ -13,9 +12,13 @@ import TournamentLobby from './components/games/TournamentLobby';
 import Baccarat from './components/games/Baccarat';
 import Craps from './components/games/Craps';
 import VideoPoker from './components/games/VideoPoker';
+import FishHunter from './components/games/FishHunter';
+import DragonTiger from './components/games/DragonTiger';
+import WheelOfFortune from './components/games/WheelOfFortune';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { createSocket } from './utils/socket';
 
-const socket = io('http://localhost:5000');
+const socket = createSocket();
 
 function App() {
   return (
@@ -74,6 +77,21 @@ function App() {
               <Route path="/games/video-poker" element={
                 <ProtectedRoute>
                   <VideoPoker />
+                </ProtectedRoute>
+              } />
+              <Route path="/games/fish-hunter" element={
+                <ProtectedRoute>
+                  <FishHunter socket={socket} />
+                </ProtectedRoute>
+              } />
+              <Route path="/games/dragon-tiger" element={
+                <ProtectedRoute>
+                  <DragonTiger socket={socket} />
+                </ProtectedRoute>
+              } />
+              <Route path="/games/wheel-fortune" element={
+                <ProtectedRoute>
+                  <WheelOfFortune socket={socket} />
                 </ProtectedRoute>
               } />
               <Route path="/" element={<Navigate to="/dashboard" />} />

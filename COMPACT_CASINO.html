@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎰 Greenwood Games Casino - Compact Edition</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Compact Header */
+        .header {
+            background: rgba(0,0,0,0.8);
+            padding: 8px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            border-bottom: 2px solid #ffd700;
+        }
+
+        .logo { font-size: 24px; font-weight: bold; color: #ffd700; }
+        
+        .stats {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+        }
+
+        .balance {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 15px;
+            padding: 15px;
+            height: calc(100vh - 60px);
+        }
+
+        /* Game Cards - Compact */
+        .game-card {
+            background: linear-gradient(135deg, rgba(40,44,52,0.9), rgba(33,37,41,0.9));
+            border-radius: 15px;
+            padding: 15px;
+            border: 2px solid #495057;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card:hover {
+            border-color: #ffd700;
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(255,215,0,0.3);
+        }
+
+        .game-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .game-display {
+            width: 100%;
+            height: 120px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 36px;
+            border: 1px solid #495057;
+        }
+
+        .game-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 12px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #28a745, #1e7e34);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(45deg, #ffc107, #e0a800);
+            color: black;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Slot Machine */
+        .slot-reels {
+            display: flex;
+            gap: 5px;
+        }
+
+        .slot-reel {
+            width: 50px;
+            height: 60px;
+            background: #000;
+            border: 2px solid #ffd700;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        /* Blackjack */
+        .blackjack-area {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .cards {
+            display: flex;
+            gap: 5px;
+        }
+
+        .card {
+            width: 30px;
+            height: 40px;
+            background: white;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            font-size: 12px;
+            font-weight: bold;
+            border: 1px solid #ccc;
+        }
+
+        /* Roulette */
+        .roulette-wheel {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: conic-gradient(#ff0000 0deg 45deg, #000000 45deg 90deg, #ff0000 90deg 135deg, #000000 135deg 180deg, #ff0000 180deg 225deg, #000000 225deg 270deg, #ff0000 270deg 315deg, #000000 315deg 360deg);
+            border: 4px solid #ffd700;
+            position: relative;
+            transition: transform 2s ease;
+        }
+
+        .roulette-ball {
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Poker */
+        .poker-hand {
+            display: flex;
+            gap: 3px;
+            justify-content: center;
+        }
+
+        /* Baccarat */
+        .baccarat-table {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 12px;
+        }
+
+        .hand {
+            text-align: center;
+        }
+
+        /* Craps */
+        .dice-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .dice {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            font-size: 20px;
+            font-weight: bold;
+            border: 2px solid #333;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(6, 1fr);
+                gap: 10px;
+                padding: 10px;
+            }
+            
+            .game-display {
+                height: 80px;
+            }
+            
+            .header {
+                padding: 5px 10px;
+                height: 50px;
+            }
+            
+            .logo { font-size: 18px; }
+            .stats { font-size: 12px; gap: 10px; }
+        }
+
+        /* Animation Classes */
+        .spinning { animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .flash { animation: flash 0.5s ease-in-out; }
+        @keyframes flash { 0%, 100% { background-color: rgba(255,215,0,0.1); } 50% { background-color: rgba(255,215,0,0.3); } }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Compact Header -->
+    <div class="header">
+        <div class="logo">🎰 Greenwood Casino</div>
+        <div class="stats">
+            <div>Players: <span id="playersOnline">247</span></div>
+            <div>Jackpot: $<span id="jackpot">15,847</span></div>
+            <div class="balance">Balance: $<span id="balance">1000</span></div>
+        </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="main-content">
+        <!-- Slot Machine -->
+        <div class="game-card">
+            <div class="game-title">🎰 Slots</div>
+            <div class="game-display">
+                <div class="slot-reels">
+                    <div class="slot-reel" id="reel1">🍒</div>
+                    <div class="slot-reel" id="reel2">🍋</div>
+                    <div class="slot-reel" id="reel3">🍊</div>
+                </div>
+            </div>
+            <div class="game-controls">
+                <button class="btn btn-warning" onclick="spinSlots()">Spin $10</button>
+                <button class="btn btn-success" onclick="maxBetSlots()">Max $50</button>
+            </div>
+        </div>
+
+        <!-- Blackjack -->
+        <div class="game-card">
+            <div class="game-title">🃏 Blackjack</div>
+            <div class="game-display">
+                <div class="blackjack-area">
+                    <div>Dealer: <span id="dealerScore">?</span></div>
+                    <div class="cards" id="dealerCards"></div>
+                    <div>You: <span id="playerScore">0</span></div>
+                    <div class="cards" id="playerCards"></div>
+                </div>
+            </div>
+            <div class="game-controls">
+                <button class="btn btn-primary" onclick="startBlackjack()">Deal</button>
+                <button class="btn btn-success" onclick="hitBlackjack()">Hit</button>
+                <button class="btn btn-warning" onclick="standBlackjack()">Stand</button>
+            </div>
+        </div>
+
+        <!-- Roulette -->
+        <div class="game-card">
+            <div class="game-title">🎯 Roulette</div>
+            <div class="game-display">
+                <div class="roulette-wheel" id="rouletteWheel">
+                    <div class="roulette-ball"></div>
+                </div>
+                <div style="margin-top: 10px;">
+                    Last: <span id="lastNumber">-</span>
+                </div>
+            </div>
+            <div class="game-controls">
+                <button class="btn btn-primary" onclick="betRed()">Red $10</button>
+                <button class="btn btn-warning" onclick="betBlack()">Black $10</button>
+                <button class="btn btn-success" onclick="spinRoulette()">Spin</button>
+            </div>
+        </div>
+
+        <!-- Video Poker -->
+        <div class="game-card">
+            <div class="game-title">🃏 Video Poker</div>
+            <div class="game-display">
+                <div class="poker-hand" id="pokerHand">
+                    <div class="card">?</div>
+                    <div class="card">?</div>
+                    <div class="card">?</div>
+                    <div class="card">?</div>
+                    <div class="card">?</div>
+                </div>
+                <div style="margin-top: 10px;">
+                    <span id="pokerResult">Draw Cards</span>
+                </div>
+            </div>
+            <div class="game-controls">
+                <button class="btn btn-primary" onclick="dealPoker()">Deal $5</button>
+                <button class="btn btn-success" onclick="drawPoker()">Draw</button>
+            </div>
+        </div>
+
+        <!-- Baccarat -->
+        <div class="game-card">
+            <div class="game-title">🎴 Baccarat</div>
+            <div class="game-display">
+                <div class="baccarat-table">
+                    <div class="hand">
+                        <div>Player</div>
+                        <div id="playerBaccarat">0</div>
+                    </div>
+                    <div style="align-self: center;">VS</div>
+                    <div class="hand">
+                        <div>Banker</div>
+                        <div id="bankerBaccarat">0</div>
+                    </div>
+                </div>
+                <div style="margin-top: 10px;">
+                    <span id="baccaratResult">Place Bet</span>
+                </div>
+            </div>
+            <div class="game-controls">
+                <button class="btn btn-primary" onclick="betPlayer()">Player $10</button>
+                <button class="btn btn-warning" onclick="betBanker()">Banker $10</button>
+                <button class="btn btn-success" onclick="dealBaccarat()">Deal</button>
+            </div>
+        </div>
+
+        <!-- Craps -->
+        <div class="game-card">
+            <div class="game-title">🎲 Craps</div>
+            <div class="game-display">
+                <div class="dice-container">
+                    <div class="dice" id="dice1">1</div>
+                    <div class="dice" id="dice2">1</div>
+                </div>
+                <div style="margin-top: 10px;">
+                    Total: <span id="diceTotal">2</span>
+                </div>
+            </div>
+            <div class="game-controls">
+                <button class="btn btn-primary" onclick="betPass()">Pass $10</button>
+                <button class="btn btn-warning" onclick="betDontPass()">Don't Pass $10</button>
+                <button class="btn btn-success" onclick="rollDice()">Roll</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        let balance = 1000;
+        let jackpot = 15847;
+        let playersOnline = 247;
+
+        // Update display functions
+        function updateBalance() {
+            document.getElementById('balance').textContent = balance;
+        }
+
+        function updateJackpot() {
+            jackpot += Math.floor(Math.random() * 100) + 50;
+            document.getElementById('jackpot').textContent = jackpot.toLocaleString();
+        }
+
+        function updatePlayers() {
+            playersOnline = 200 + Math.floor(Math.random() * 100);
+            document.getElementById('playersOnline').textContent = playersOnline;
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification show ${type}`;
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Slot Machine
+        const slotSymbols = ['🍒', '🍋', '🍊', '🍇', '⭐', '💎', '7️⃣'];
+        
+        function spinSlots() {
+            if (balance < 10) return showNotification('Insufficient balance!', 'error');
+            
+            balance -= 10;
+            updateBalance();
+            
+            const reels = ['reel1', 'reel2', 'reel3'];
+            const results = [];
+            
+            reels.forEach((reel, index) => {
+                const element = document.getElementById(reel);
+                element.classList.add('spinning');
+                
+                setTimeout(() => {
+                    const symbol = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
+                    element.textContent = symbol;
+                    element.classList.remove('spinning');
+                    results.push(symbol);
+                    
+                    if (index === 2) checkSlotWin(results);
+                }, 1000 + index * 200);
+            });
+        }
+
+        function checkSlotWin(results) {
+            if (results[0] === results[1] && results[1] === results[2]) {
+                const winAmount = results[0] === '💎' ? 500 : results[0] === '7️⃣' ? 300 : 100;
+                balance += winAmount;
+                updateBalance();
+                showNotification(`JACKPOT! Won $${winAmount}!`);
+            } else if (results[0] === results[1] || results[1] === results[2] || results[0] === results[2]) {
+                balance += 20;
+                updateBalance();
+                showNotification('Small win! +$20');
+            }
+        }
+
+        function maxBetSlots() {
+            if (balance < 50) return showNotification('Insufficient balance!', 'error');
+            balance -= 50;
+            updateBalance();
+            spinSlots();
+        }
+
+        // Blackjack
+        let blackjackGame = { playerCards: [], dealerCards: [], gameActive: false };
+
+        function getRandomCard() {
+            const cards = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+            return cards[Math.floor(Math.random() * cards.length)];
+        }
+
+        function getCardValue(card) {
+            if (card === 'A') return 11;
+            if (['J', 'Q', 'K'].includes(card)) return 10;
+            return parseInt(card);
+        }
+
+        function calculateScore(cards) {
+            let score = 0;
+            let aces = 0;
+            
+            cards.forEach(card => {
+                if (card === 'A') aces++;
+                score += getCardValue(card);
+            });
+            
+            while (score > 21 && aces > 0) {
+                score -= 10;
+                aces--;
+            }
+            
+            return score;
+        }
+
+        function startBlackjack() {
+            if (balance < 20) return showNotification('Insufficient balance!', 'error');
+            
+            balance -= 20;
+            updateBalance();
+            
+            blackjackGame = {
+                playerCards: [getRandomCard(), getRandomCard()],
+                dealerCards: [getRandomCard(), getRandomCard()],
+                gameActive: true
+            };
+            
+            updateBlackjackDisplay();
+        }
+
+        function updateBlackjackDisplay() {
+            const playerCards = document.getElementById('playerCards');
+            const dealerCards = document.getElementById('dealerCards');
+            
+            playerCards.innerHTML = blackjackGame.playerCards.map(card => `<div class="card">${card}</div>`).join('');
+            dealerCards.innerHTML = blackjackGame.gameActive ? 
+                `<div class="card">${blackjackGame.dealerCards[0]}</div><div class="card">?</div>` :
+                blackjackGame.dealerCards.map(card => `<div class="card">${card}</div>`).join('');
+            
+            const playerScore = calculateScore(blackjackGame.playerCards);
+            document.getElementById('playerScore').textContent = playerScore;
+            document.getElementById('dealerScore').textContent = blackjackGame.gameActive ? '?' : calculateScore(blackjackGame.dealerCards);
+            
+            if (playerScore > 21) {
+                blackjackGame.gameActive = false;
+                showNotification('Bust! You lose.');
+                updateBlackjackDisplay();
+            } else if (playerScore === 21) {
+                standBlackjack();
+            }
+        }
+
+        function hitBlackjack() {
+            if (!blackjackGame.gameActive) return;
+            blackjackGame.playerCards.push(getRandomCard());
+            updateBlackjackDisplay();
+        }
+
+        function standBlackjack() {
+            if (!blackjackGame.gameActive) return;
+            
+            blackjackGame.gameActive = false;
+            
+            while (calculateScore(blackjackGame.dealerCards) < 17) {
+                blackjackGame.dealerCards.push(getRandomCard());
+            }
+            
+            const playerScore = calculateScore(blackjackGame.playerCards);
+            const dealerScore = calculateScore(blackjackGame.dealerCards);
+            
+            updateBlackjackDisplay();
+            
+            if (dealerScore > 21 || playerScore > dealerScore) {
+                balance += 40;
+                updateBalance();
+                showNotification('You win! +$40');
+            } else if (playerScore === dealerScore) {
+                balance += 20;
+                updateBalance();
+                showNotification('Push! Bet returned.');
+            } else {
+                showNotification('Dealer wins!');
+            }
+        }
+
+        // Roulette
+        let rouletteBet = null;
+
+        function betRed() {
+            if (balance < 10) return showNotification('Insufficient balance!', 'error');
+            rouletteBet = 'red';
+            showNotification('Bet placed on Red!');
+        }
+
+        function betBlack() {
+            if (balance < 10) return showNotification('Insufficient balance!', 'error');
+            rouletteBet = 'black';
+            showNotification('Bet placed on Black!');
+        }
+
+        function spinRoulette() {
+            if (!rouletteBet) return showNotification('Place a bet first!', 'error');
+            
+            balance -= 10;
+            updateBalance();
+            
+            const wheel = document.getElementById('rouletteWheel');
+            wheel.classList.add('spinning');
+            
+            setTimeout(() => {
+                const number = Math.floor(Math.random() * 37); // 0-36
+                const isRed = [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36].includes(number);
+                const color = number === 0 ? 'green' : (isRed ? 'red' : 'black');
+                
+                wheel.classList.remove('spinning');
+                document.getElementById('lastNumber').textContent = `${number} (${color})`;
+                
+                if (rouletteBet === color) {
+                    balance += 20;
+                    updateBalance();
+                    showNotification(`Win! ${number} ${color} - +$20`);
+                } else {
+                    showNotification(`${number} ${color} - Better luck next time!`);
+                }
+                
+                rouletteBet = null;
+            }, 2000);
+        }
+
+        // Video Poker
+        let pokerHand = [];
+
+        function dealPoker() {
+            if (balance < 5) return showNotification('Insufficient balance!', 'error');
+            
+            balance -= 5;
+            updateBalance();
+            
+            const suits = ['♠', '♥', '♦', '♣'];
+            const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+            
+            pokerHand = [];
+            for (let i = 0; i < 5; i++) {
+                const suit = suits[Math.floor(Math.random() * suits.length)];
+                const rank = ranks[Math.floor(Math.random() * ranks.length)];
+                pokerHand.push(`${rank}${suit}`);
+            }
+            
+            updatePokerDisplay();
+        }
+
+        function updatePokerDisplay() {
+            const handElement = document.getElementById('pokerHand');
+            handElement.innerHTML = pokerHand.map(card => `<div class="card">${card}</div>`).join('');
+            
+            const result = evaluatePokerHand();
+            document.getElementById('pokerResult').textContent = result.name;
+            
+            if (result.payout > 0) {
+                balance += result.payout;
+                updateBalance();
+                showNotification(`${result.name}! +$${result.payout}`);
+            }
+        }
+
+        function evaluatePokerHand() {
+            // Simplified poker evaluation
+            const ranks = pokerHand.map(card => card.slice(0, -1));
+            const suits = pokerHand.map(card => card.slice(-1));
+            
+            const isFlush = suits.every(suit => suit === suits[0]);
+            const rankCounts = {};
+            ranks.forEach(rank => rankCounts[rank] = (rankCounts[rank] || 0) + 1);
+            const counts = Object.values(rankCounts).sort((a, b) => b - a);
+            
+            if (counts[0] === 4) return { name: 'Four of a Kind', payout: 50 };
+            if (counts[0] === 3 && counts[1] === 2) return { name: 'Full House', payout: 25 };
+            if (isFlush) return { name: 'Flush', payout: 15 };
+            if (counts[0] === 3) return { name: 'Three of a Kind', payout: 10 };
+            if (counts[0] === 2 && counts[1] === 2) return { name: 'Two Pair', payout: 5 };
+            if (counts[0] === 2) return { name: 'Pair', payout: 2 };
+            
+            return { name: 'High Card', payout: 0 };
+        }
+
+        function drawPoker() {
+            if (pokerHand.length === 0) return showNotification('Deal cards first!', 'error');
+            updatePokerDisplay();
+        }
+
+        // Baccarat
+        function betPlayer() {
+            if (balance < 10) return showNotification('Insufficient balance!', 'error');
+            showNotification('Bet placed on Player!');
+        }
+
+        function betBanker() {
+            if (balance < 10) return showNotification('Insufficient balance!', 'error');
+            showNotification('Bet placed on Banker!');
+        }
+
+        function dealBaccarat() {
+            balance -= 10;
+            updateBalance();
+            
+            const playerTotal = (Math.floor(Math.random() * 9) + 1);
+            const bankerTotal = (Math.floor(Math.random() * 9) + 1);
+            
+            document.getElementById('playerBaccarat').textContent = playerTotal;
+            document.getElementById('bankerBaccarat').textContent = bankerTotal;
+            
+            if (playerTotal > bankerTotal) {
+                balance += 20;
+                updateBalance();
+                document.getElementById('baccaratResult').textContent = 'Player Wins!';
+                showNotification('Player wins! +$20');
+            } else if (bankerTotal > playerTotal) {
+                document.getElementById('baccaratResult').textContent = 'Banker Wins!';
+                showNotification('Banker wins!');
+            } else {
+                balance += 10;
+                updateBalance();
+                document.getElementById('baccaratResult').textContent = 'Tie!';
+                showNotification('Tie! Bet returned.');
+            }
+        }
+
+        // Craps
+        function betPass() {
+            if (balance < 10) return showNotification('Insufficient balance!', 'error');
+            showNotification('Bet placed on Pass Line!');
+        }
+
+        function betDontPass() {
+            if (balance < 10) return showNotification('Insufficient balance!', 'error');
+            showNotification('Bet placed on Don\'t Pass!');
+        }
+
+        function rollDice() {
+            balance -= 10;
+            updateBalance();
+            
+            const dice1 = Math.floor(Math.random() * 6) + 1;
+            const dice2 = Math.floor(Math.random() * 6) + 1;
+            const total = dice1 + dice2;
+            
+            document.getElementById('dice1').textContent = dice1;
+            document.getElementById('dice2').textContent = dice2;
+            document.getElementById('diceTotal').textContent = total;
+            
+            if ([7, 11].includes(total)) {
+                balance += 20;
+                updateBalance();
+                showNotification(`${total} - Pass Line wins! +$20`);
+            } else if ([2, 3, 12].includes(total)) {
+                showNotification(`${total} - Don't Pass wins!`);
+            } else {
+                showNotification(`Point: ${total}`);
+            }
+        }
+
+        // Auto-update stats
+        setInterval(() => {
+            updateJackpot();
+            updatePlayers();
+        }, 5000);
+
+        // Initialize
+        updateBalance();
+        showNotification('Welcome to Greenwood Casino!');
+    </script>
+</body>
+</html>

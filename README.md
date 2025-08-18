@@ -1,20 +1,39 @@
-# Greenwood Games
+# Greenwood Games - Complete Casino Platform with River777 Collection
 
-A comprehensive casino game platform with web and mobile interfaces featuring slot machines, table games, and card games.
+A comprehensive casino game platform featuring classic casino games, the exciting River777 games collection, and cross-platform support with real-time multiplayer features.
 
-## 🎮 Features
+## 🎮 Game Collection
 
-### Games Included
+### 🏆 Classic Casino Games
 - **🎰 Slot Machines**: Classic slots with various themes and multipliers
 - **🃏 Blackjack**: Traditional 21 card game with dealer AI
 - **🎲 Roulette**: European-style roulette with number and color betting
-- **🎮 Card Games**: Poker and other card game variations (coming soon)
 
-### Platform Support
+### 🐉 River777 Games Collection (NEW!)
+- **🐠 Fish Hunter**: Interactive shooting game in live ocean environment
+  - Multiple fish types with different point values (10-200 points)
+  - Auto-fishing mode for automated gameplay (30 seconds)
+  - Real-time ammunition system with reload mechanics
+  - Progressive scoring and earnings conversion
+
+- **🐉 Dragon Tiger**: Fast-paced card comparison game
+  - Simple high-card wins mechanism
+  - Dragon, Tiger, and Tie betting options
+  - Quick rounds with instant results
+  - High payout ratios (2:1 standard, 8:1 tie)
+
+- **🎡 Wheel of Fortune**: Colorful spinning wheel with 12 prize segments
+  - Multiple prize tiers from $50 to $500
+  - Mega Spin option for 4x bet multiplier
+  - Real-time wheel physics and animations
+  - Progressive biggest win tracking
+
+### Platform Features
 - **Web Application**: React-based responsive web interface
-- **Mobile Application**: React Native app for iOS and Android
-- **Real-time Gaming**: Socket.IO for live game interactions
+- **Mobile Application**: React Native app for iOS and Android  
+- **Real-time Gaming**: Socket.IO for live game interactions and multiplayer
 - **User Authentication**: Secure login and registration system
+- **Cross-game Integration**: Seamless navigation between all games
 
 ## 🏗️ Project Structure
 
@@ -86,19 +105,56 @@ JWT_SECRET=your_jwt_secret_key_here
 MONGODB_URI=mongodb://localhost:27017/greenwood_games  # Optional: for database
 ```
 
+### Game Access Routes
+
+Navigate to the following URLs once the application is running:
+
+**Classic Casino Games:**
+- `/games/slots` - Slot machines with multipliers and themes
+- `/games/blackjack` - 21 card game with dealer AI
+- `/games/roulette` - European roulette with betting system
+
+**River777 Collection:**
+- `/games/fish-hunter` - Interactive fish shooting arcade game
+- `/games/dragon-tiger` - Fast-paced card comparison game  
+- `/games/wheel-fortune` - Prize wheel with multiple tiers
+
+All games feature real-time Socket.IO integration for multiplayer experiences and live updates.
+
 ## 🎯 Getting Started
 
 ### Web Application
 1. Navigate to `http://localhost:3000`
-2. Register a new account or login
+2. Register a new account or login  
 3. Start with $1000 virtual balance
-4. Choose your game and start playing!
+4. Choose from Classic Casino or River777 Collection
+5. Start playing and earning rewards!
 
-### Mobile Application
+### Mobile Application  
 1. Install Expo Go app on your device
 2. Run `npm run mobile:dev`
 3. Scan the QR code with Expo Go
-4. Register/login and start gaming!
+4. Register/login and enjoy all games on mobile!
+
+### River777 Games Quick Guide
+
+**Fish Hunter:** 
+- Click on fish to shoot and earn points
+- Bigger fish = more points (10-200 range)
+- Use Auto mode for 30-second automated fishing
+- Points convert to casino balance
+
+**Dragon Tiger:**
+- Choose Dragon, Tiger, or Tie
+- Higher card wins (Dragon vs Tiger)
+- Payouts: 2:1 on Dragon/Tiger, 8:1 on Tie
+- Fast rounds perfect for quick gaming
+
+**Wheel of Fortune:**
+- Spin for prizes from $50 to $500
+- Use Mega Spin for 4x bet and better odds
+- Track your biggest wins
+- 12 different prize segments
 
 ## 🎮 Game Rules
 

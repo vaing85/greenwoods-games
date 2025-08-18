@@ -1,0 +1,205 @@
+.fish-hunter-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.game-header {
+  background: linear-gradient(135deg, #001122, #003366);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 2px solid #00ffff;
+}
+
+.game-header h2 {
+  color: #00ffff;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 32px;
+  text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+}
+
+.game-stats {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.stat-item {
+  background: rgba(0, 255, 255, 0.1);
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #00ffff;
+  color: #00ffff;
+  font-weight: bold;
+}
+
+.ocean-container {
+  width: 100%;
+  height: 600px;
+  background: linear-gradient(to bottom, #004466, #001133);
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid #00ffff;
+  cursor: crosshair;
+  margin-bottom: 20px;
+}
+
+.cannon {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 50px;
+  color: #ff6b35;
+  text-shadow: 0 0 20px #ff6b35;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.fish {
+  position: absolute;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  user-select: none;
+}
+
+.fish:hover {
+  transform: scale(1.2);
+  filter: brightness(1.5);
+}
+
+.fish.small {
+  font-size: 30px;
+  animation: swim-small 8s linear infinite;
+}
+
+.fish.medium {
+  font-size: 45px;
+  animation: swim-medium 12s linear infinite;
+}
+
+.fish.large {
+  font-size: 60px;
+  animation: swim-large 15s linear infinite;
+}
+
+.fish.boss {
+  font-size: 80px;
+  animation: swim-boss 20s linear infinite;
+  text-shadow: 0 0 20px #ff6b35;
+}
+
+@keyframes swim-small {
+  0% { left: -60px; top: 20%; }
+  100% { left: 100%; top: 80%; }
+}
+
+@keyframes swim-medium {
+  0% { left: 100%; top: 60%; }
+  100% { left: -80px; top: 10%; }
+}
+
+@keyframes swim-large {
+  0% { left: -100px; top: 80%; }
+  100% { left: 100%; top: 20%; }
+}
+
+@keyframes swim-boss {
+  0% { left: 100%; top: 40%; }
+  50% { left: 30%; top: 70%; }
+  100% { left: -120px; top: 10%; }
+}
+
+.bullet {
+  position: absolute;
+  width: 8px;
+  height: 20px;
+  background: linear-gradient(to top, #ffff00, #ff6b35);
+  border-radius: 50%;
+  animation: shoot 1s linear forwards;
+  z-index: 15;
+  pointer-events: none;
+}
+
+@keyframes shoot {
+  0% { bottom: 80px; opacity: 1; }
+  100% { bottom: 600px; opacity: 0; }
+}
+
+.game-controls {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.btn-primary {
+  background: linear-gradient(45deg, #007bff, #0056b3);
+  color: white;
+}
+
+.btn-success {
+  background: linear-gradient(45deg, #28a745, #1e7e34);
+  color: white;
+}
+
+.btn-danger {
+  background: linear-gradient(45deg, #dc3545, #c82333);
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .game-stats {
+    justify-content: center;
+  }
+  
+  .stat-item {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+  
+  .ocean-container {
+    height: 400px;
+  }
+  
+  .cannon {
+    font-size: 40px;
+  }
+  
+  .fish.small {
+    font-size: 25px;
+  }
+  
+  .fish.medium {
+    font-size: 35px;
+  }
+  
+  .fish.large {
+    font-size: 45px;
+  }
+  
+  .fish.boss {
+    font-size: 60px;
+  }
+}

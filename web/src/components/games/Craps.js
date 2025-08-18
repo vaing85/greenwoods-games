@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import io from 'socket.io-client';
+import { createSocket } from '../../utils/socket';
 import './Craps.css';
 
 const Craps = () => {
@@ -21,7 +21,7 @@ const Craps = () => {
   useEffect(() => {
     if (!user) return;
 
-    const newSocket = io('http://localhost:5000', {
+    const newSocket = createSocket({
       auth: { token }
     });
 

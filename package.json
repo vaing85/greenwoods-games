@@ -5,12 +5,12 @@
   "main": "server/index.js",
   "scripts": {
     "dev": "concurrently \"npm run server:dev\" \"npm run web:dev\"",
-    "server:dev": "cd server; npm run dev",
-    "web:dev": "cd web; npm start",
-    "mobile:dev": "cd mobile; npm start",
-    "install:all": "npm install; cd server; npm install; cd ../web; npm install; cd ../mobile; npm install",
-    "build": "cd web; npm run build",
-    "start": "cd server; npm start"
+    "server:dev": "Set-Location server; npm run dev",
+    "web:dev": "Set-Location web; npm start",
+    "mobile:dev": "Set-Location mobile; npm start",
+    "install:all": "npm install; Set-Location server; npm install; Set-Location ../web; npm install; Set-Location ../mobile; npm install",
+    "build": "Set-Location web; npm run build",
+    "start": "Set-Location server; npm start"
   },
   "keywords": ["casino", "games", "react", "react-native", "nodejs"],
   "author": "",

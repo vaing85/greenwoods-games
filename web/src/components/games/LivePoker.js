@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
 import { useAuth } from '../../context/AuthContext';
+import { createSocket } from '../../utils/socket';
 import './LivePoker.css';
 
 const LivePoker = () => {
@@ -17,7 +17,7 @@ const LivePoker = () => {
   // Initialize socket connection
   useEffect(() => {
     if (user && token) {
-      const newSocket = io('http://localhost:5000');
+      const newSocket = createSocket();
       setSocket(newSocket);
 
       newSocket.on('connect', () => {

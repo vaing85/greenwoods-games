@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>River777 Casino Hub - Choose Your Experience</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #000428, #004e92, #001122);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main-logo {
+            font-size: 48px;
+            font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); text-shadow: 0 0 30px rgba(0, 255, 255, 0.8); }
+            50% { transform: scale(1.05); text-shadow: 0 0 50px rgba(0, 255, 255, 1); }
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #ffd700;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .casino-options {
+            display: flex;
+            gap: 50px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1000px;
+        }
+
+        .casino-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 25px;
+            padding: 40px;
+            border: 3px solid rgba(0, 255, 255, 0.5);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            text-align: center;
+            min-width: 350px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .casino-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .casino-card:hover::before {
+            left: 100%;
+        }
+
+        .casino-card:hover {
+            border-color: #00ffff;
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 255, 255, 0.4);
+        }
+
+        .casino-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .casino-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .casino-description {
+            font-size: 16px;
+            color: #cccccc;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .feature-list {
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .feature-item {
+            color: #00ffff;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .feature-item::before {
+            content: "✨ ";
+            color: #ffd700;
+        }
+
+        .play-button {
+            background: linear-gradient(45deg, #00ffff, #0099cc);
+            color: #001122;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .play-button:hover {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .gold-card .play-button {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #001122;
+        }
+
+        .gold-card .play-button:hover {
+            background: linear-gradient(45deg, #00ffff, #0099cc);
+        }
+
+        .stats-bar {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 25px;
+            border-radius: 15px;
+            border: 2px solid #00ffff;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .stat-value {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00ffff;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10%, 90% {
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-10px) rotate(180deg);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-logo {
+                font-size: 36px;
+            }
+            
+            .subtitle {
+                font-size: 18px;
+                margin-bottom: 30px;
+            }
+            
+            .casino-options {
+                gap: 30px;
+                padding: 0 20px;
+            }
+            
+            .casino-card {
+                min-width: 280px;
+                padding: 30px 20px;
+            }
+            
+            .casino-icon {
+                font-size: 60px;
+            }
+            
+            .casino-title {
+                font-size: 24px;
+            }
+            
+            .stats-bar {
+                position: relative;
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Particles -->
+    <div class="floating-particles" id="particles"></div>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <span>Players Online:</span>
+            <span class="stat-value" id="playersOnline">1,247</span>
+        </div>
+        <div class="stat-item">
+            <span>Total Jackpot:</span>
+            <span class="stat-value">$<span id="totalJackpot">5,847,593</span></span>
+        </div>
+        <div class="stat-item">
+            <span>Games Available:</span>
+            <span class="stat-value">15+</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-logo">🏆 River777 Casino Hub</div>
+    <div class="subtitle">Choose Your Ultimate Gaming Experience</div>
+
+    <div class="casino-options">
+        <!-- River Gold Casino -->
+        <div class="casino-card gold-card" onclick="window.open('RIVER_GOLD_CASINO.html', '_blank')">
+            <div class="casino-icon">🏆</div>
+            <div class="casino-title">River Gold Casino</div>
+            <div class="casino-description">
+                Premium casino experience with classic table games, slots, and progressive jackpots.
+            </div>
+            <div class="feature-list">
+                <div class="feature-item">6 Classic Casino Games</div>
+                <div class="feature-item">Progressive Jackpots</div>
+                <div class="feature-item">Professional Animations</div>
+                <div class="feature-item">Mobile Optimized</div>
+                <div class="feature-item">Real-time Statistics</div>
+            </div>
+            <button class="play-button">Play River Gold</button>
+        </div>
+
+        <!-- River777 Games -->
+        <div class="casino-card" onclick="window.open('RIVER777_GAMES.html', '_blank')">
+            <div class="casino-icon">🐉</div>
+            <div class="casino-title">River777 Games</div>
+            <div class="casino-description">
+                Exciting collection featuring Fish Hunter, Dragon Tiger, Lucky Slots, and Wheel of Fortune.
+            </div>
+            <div class="feature-list">
+                <div class="feature-item">Fish Hunter Arcade</div>
+                <div class="feature-item">Dragon Tiger Card Game</div>
+                <div class="feature-item">5-Reel Lucky Slots</div>
+                <div class="feature-item">Wheel of Fortune</div>
+                <div class="feature-item">Live Ocean Experience</div>
+            </div>
+            <button class="play-button">Play River777</button>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Update live stats
+        function updateStats() {
+            const playersElement = document.getElementById('playersOnline');
+            const jackpotElement = document.getElementById('totalJackpot');
+            
+            // Simulate live player count
+            const currentPlayers = parseInt(playersElement.textContent.replace(',', ''));
+            const newPlayers = currentPlayers + Math.floor(Math.random() * 10) - 5;
+            playersElement.textContent = Math.max(1000, newPlayers).toLocaleString();
+            
+            // Simulate growing jackpot
+            const currentJackpot = parseInt(jackpotElement.textContent.replace(/,/g, ''));
+            const newJackpot = currentJackpot + Math.floor(Math.random() * 1000) + 100;
+            jackpotElement.textContent = newJackpot.toLocaleString();
+        }
+
+        // Initialize
+        window.addEventListener('load', function() {
+            createParticles();
+            
+            // Update stats every 5 seconds
+            setInterval(updateStats, 5000);
+        });
+
+        // Add click effects
+        document.querySelectorAll('.casino-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Create ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(0, 255, 255, 0.6)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.left = (e.clientX - card.offsetLeft) + 'px';
+                ripple.style.top = (e.clientY - card.offsetTop) + 'px';
+                
+                card.style.position = 'relative';
+                card.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
