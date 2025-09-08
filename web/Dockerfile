@@ -11,6 +11,9 @@ RUN addgroup -g 1001 -S nodejs && \
 # Install serve globally for production
 RUN npm install -g serve
 
+# Install curl for health checks
+RUN apk add --no-cache curl
+
 # Copy package files
 COPY package*.json ./
 
@@ -39,7 +42,7 @@ EXPOSE 3000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:3000 || exit 1
+  CMD node healthcheck.js
 
 # Start application
 CMD ["serve", "-s", "build", "-l", "3000"]

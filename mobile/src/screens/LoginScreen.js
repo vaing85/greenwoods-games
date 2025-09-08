@@ -13,12 +13,15 @@ import { useAuth } from '../context/AuthContext';
 
 const LoginScreen = ({ navigation }) => {
   const [isLogin, setIsLogin] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
   });
   const [loading, setLoading] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
 
   const { login, register } = useAuth();
 
@@ -54,6 +57,39 @@ const LoginScreen = ({ navigation }) => {
     setLoading(false);
   };
 
+  const handleForgotPassword = async () => {
+    if (!resetEmail) {
+      Alert.alert('Error', 'Please enter your email address');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: resetEmail }),
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        Alert.alert('Success', 'Password reset instructions sent to your email!');
+        setShowForgotPassword(false);
+        setResetEmail('');
+      } else {
+        Alert.alert('Error', result.message || 'Failed to send reset email');
+      }
+    } catch (err) {
+      Alert.alert('Error', 'An error occurred. Please try again.');
+    }
+
+    setLoading(false);
+  };
+
   return (
     <KeyboardAvoidingView 
       style={styles.container} 
@@ -62,10 +98,41 @@ const LoginScreen = ({ navigation }) => {
       <View style={styles.content}>
         <Text style={styles.title}>🎰 Greenwood Games</Text>
         <Text style={styles.subtitle}>
-          {isLogin ? 'Welcome Back!' : 'Join the Fun!'}
+          {showForgotPassword ? 'Reset Password' : (isLogin ? 'Welcome Back!' : 'Join the Fun!')}
         </Text>
 
         <View style={styles.form}>
+          {showForgotPassword ? (
+            <>
+              <TextInput
+                style={styles.input}
+                placeholder="Email Address"
+                placeholderTextColor="#999"
+                value={resetEmail}
+                onChangeText={setResetEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+
+              <TouchableOpacity
+                style={[styles.button, loading && styles.buttonDisabled]}
+                onPress={handleForgotPassword}
+                disabled={loading}
+              >
+                <Text style={styles.buttonText}>
+                  {loading ? 'Sending...' : 'Send Reset Instructions'}
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.toggleButton}
+                onPress={() => setShowForgotPassword(false)}
+              >
+                <Text style={styles.toggleButtonText}>Back to Login</Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <>
           {!isLogin && (
             <TextInput
               style={styles.input}
@@ -87,33 +154,54 @@ const LoginScreen = ({ navigation }) => {
             autoCapitalize="none"
           />
 
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            placeholderTextColor="#999"
-            value={formData.password}
-            onChangeText={(value) => handleChange('password', value)}
-            secureTextEntry
-          />
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={styles.passwordInput}
+              placeholder="Password"
+              placeholderTextColor="#999"
+              value={formData.password}
+              onChangeText={(value) => handleChange('password', value)}
+              secureTextEntry={!showPassword}
+            />
+            <TouchableOpacity
+              style={styles.eyeButton}
+              onPress={() => setShowPassword(!showPassword)}
+            >
+              <Text style={styles.eyeIcon}>
+                {showPassword ? '🙈' : '👁'}
+              </Text>
+            </TouchableOpacity>
+          </View>
 
-          <TouchableOpacity
-            style={[styles.button, loading && styles.buttonDisabled]}
-            onPress={handleSubmit}
-            disabled={loading}
-          >
-            <Text style={styles.buttonText}>
-              {loading ? 'Please wait...' : (isLogin ? 'Login' : 'Register')}
-            </Text>
-          </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, loading && styles.buttonDisabled]}
+                onPress={handleSubmit}
+                disabled={loading}
+              >
+                <Text style={styles.buttonText}>
+                  {loading ? 'Please wait...' : (isLogin ? 'Login' : 'Register')}
+                </Text>
+              </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.toggleButton}
-            onPress={() => setIsLogin(!isLogin)}
-          >
-            <Text style={styles.toggleButtonText}>
-              {isLogin ? 'Need an account? Register' : 'Already have an account? Login'}
-            </Text>
-          </TouchableOpacity>
+              {isLogin && (
+                <TouchableOpacity
+                  style={styles.toggleButton}
+                  onPress={() => setShowForgotPassword(true)}
+                >
+                  <Text style={styles.toggleButtonText}>Forgot Password?</Text>
+                </TouchableOpacity>
+              )}
+
+              <TouchableOpacity
+                style={styles.toggleButton}
+                onPress={() => setIsLogin(!isLogin)}
+              >
+                <Text style={styles.toggleButtonText}>
+                  {isLogin ? 'Need an account? Register' : 'Already have an account? Login'}
+                </Text>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
       </View>
     </KeyboardAvoidingView>
@@ -155,6 +243,30 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  passwordContainer: {
+    position: 'relative',
+    marginBottom: 15,
+  },
+  passwordInput: {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 10,
+    padding: 15,
+    paddingRight: 50,
+    color: '#fff',
+    fontSize: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  eyeButton: {
+    position: 'absolute',
+    right: 15,
+    top: 15,
+    padding: 5,
+  },
+  eyeIcon: {
+    fontSize: 20,
+    color: 'rgba(255, 255, 255, 0.7)',
   },
   button: {
     backgroundColor: '#ff6b6b',

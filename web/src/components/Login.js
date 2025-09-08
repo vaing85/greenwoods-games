@@ -55,6 +55,43 @@ const Input = styled.input`
   }
 `;
 
+const PasswordContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+const PasswordInput = styled(Input)`
+  padding-right: 3rem;
+`;
+
+const EyeButton = styled.button`
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+  
+  &:hover {
+    color: #ff6b6b;
+  }
+  
+  &:focus {
+    outline: none;
+  }
+`;
+
+const EyeIcon = styled.span`
+  font-size: 1.2rem;
+  user-select: none;
+`;
+
 const Button = styled.button`
   width: 100%;
   padding: 0.75rem;
@@ -95,6 +132,8 @@ const ErrorMessage = styled.div`
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -102,6 +141,7 @@ const Login = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
   
   const { login, register } = useAuth();
   const navigate = useNavigate();
@@ -138,10 +178,69 @@ const Login = () => {
     setLoading(false);
   };
 
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: resetEmail }),
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        setError('Password reset instructions sent to your email!');
+        setShowForgotPassword(false);
+        setResetEmail('');
+      } else {
+        setError(result.message || 'Failed to send reset email');
+      }
+    } catch (err) {
+      setError('An error occurred. Please try again.');
+    }
+    
+    setLoading(false);
+  };
+
   return (
     <LoginContainer>
-      <LoginForm onSubmit={handleSubmit}>
-        <Title>{isLogin ? 'Login' : 'Register'}</Title>
+      {showForgotPassword ? (
+        <LoginForm onSubmit={handleForgotPassword}>
+          <Title>Reset Password</Title>
+          
+          <FormGroup>
+            <Label>Email Address</Label>
+            <Input
+              type="email"
+              value={resetEmail}
+              onChange={(e) => setResetEmail(e.target.value)}
+              placeholder="Enter your email address"
+              required
+            />
+          </FormGroup>
+          
+          <Button type="submit" disabled={loading}>
+            {loading ? 'Sending...' : 'Send Reset Instructions'}
+          </Button>
+          
+          <ToggleButton
+            type="button"
+            onClick={() => setShowForgotPassword(false)}
+          >
+            Back to Login
+          </ToggleButton>
+          
+          {error && <ErrorMessage>{error}</ErrorMessage>}
+        </LoginForm>
+      ) : (
+        <LoginForm onSubmit={handleSubmit}>
+          <Title>{isLogin ? 'Login' : 'Register'}</Title>
         
         {!isLogin && (
           <FormGroup>
@@ -171,19 +270,39 @@ const Login = () => {
         
         <FormGroup>
           <Label>Password</Label>
-          <Input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Enter your password"
-            required
-          />
+          <PasswordContainer>
+            <PasswordInput
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter your password"
+              required
+            />
+            <EyeButton
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              <EyeIcon>
+                {showPassword ? "🙈" : "👁"}
+              </EyeIcon>
+            </EyeButton>
+          </PasswordContainer>
         </FormGroup>
         
         <Button type="submit" disabled={loading}>
           {loading ? 'Please wait...' : (isLogin ? 'Login' : 'Register')}
         </Button>
+        
+        {isLogin && !showForgotPassword && (
+          <ToggleButton
+            type="button"
+            onClick={() => setShowForgotPassword(true)}
+          >
+            Forgot Password?
+          </ToggleButton>
+        )}
         
         <ToggleButton
           type="button"
@@ -193,7 +312,8 @@ const Login = () => {
         </ToggleButton>
         
         {error && <ErrorMessage>{error}</ErrorMessage>}
-      </LoginForm>
+        </LoginForm>
+      )}
     </LoginContainer>
   );
 };
