@@ -4,10 +4,6 @@ FROM node:18-alpine
 # Set working directory
 WORKDIR /app
 
-# Create non-root user for security
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S greenwood -u 1001
-
 # Install serve globally for production
 RUN npm install -g serve
 
@@ -18,21 +14,23 @@ RUN apk add --no-cache curl
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci --only=production && \
-    npm cache clean --force
+RUN npm install --legacy-peer-deps
 
 # Copy application code
 COPY . .
 
+# Copy health check script
+COPY healthcheck.js ./
+
 # Build the application
 RUN npm run build
 
-# Remove dev dependencies and source files
-RUN rm -rf src public && \
-    rm package*.json
+# Create non-root user for security
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S greenwood -u 1001
 
-# Change ownership
-RUN chown -R greenwood:nodejs /app
+# Change ownership of build directory
+RUN chown -R greenwood:nodejs /app/build
 
 # Switch to non-root user
 USER greenwood
