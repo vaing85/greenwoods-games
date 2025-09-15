@@ -213,6 +213,13 @@ EOF
 
 print_status "Environment file created with secure random passwords"
 
+# Pre-build React application
+print_info "Pre-building React application..."
+cd web
+chmod +x pre-build.sh
+./pre-build.sh
+cd ..
+
 # Deploy with Docker
 print_info "Deploying application with Docker..."
 docker-compose -f docker-compose.prod.yml up -d --build
