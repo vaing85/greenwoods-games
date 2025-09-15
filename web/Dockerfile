@@ -10,27 +10,27 @@ RUN npm install -g serve
 # Install curl for health checks
 RUN apk add --no-cache curl
 
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install --legacy-peer-deps
-
 # Create non-root user for security
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S greenwood -u 1001
 
-# Copy application code
-COPY . .
+# Copy package files
+COPY package*.json ./
 
-# Copy health check script
-COPY healthcheck.js ./
-
-# Change ownership of entire app directory
+# Change ownership of package files
 RUN chown -R greenwood:nodejs /app
 
 # Switch to non-root user
 USER greenwood
+
+# Install dependencies as non-root user
+RUN npm install --legacy-peer-deps
+
+# Copy application code
+COPY --chown=greenwood:nodejs . .
+
+# Copy health check script
+COPY --chown=greenwood:nodejs healthcheck.js ./
 
 # Build the application (as non-root user)
 RUN npm run build
