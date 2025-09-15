@@ -21,13 +21,28 @@ jobs:
         
     - name: 📦 Install dependencies
       run: |
-        cd server && npm ci --only=production
-        cd ../web && npm ci --only=production
+        cd server && npm ci
+        cd ../web && npm ci
+        
+    - name: 🔍 Verify source files
+      run: |
+        cd web
+        echo "📁 Checking public directory:"
+        ls -la public/
+        test -f public/index.html || (echo "❌ index.html not found in public directory" && exit 1)
+        echo "✅ Source files verified"
         
     - name: 🏗️ Build web application
       run: |
         cd web
         npm run build
+        
+    - name: ✅ Verify build files
+      run: |
+        cd web
+        ls -la build/
+        test -f build/index.html || (echo "❌ index.html not found in build directory" && exit 1)
+        echo "✅ Build files verified"
         
     - name: 📤 Deploy to server
       uses: appleboy/ssh-action@v1.0.3
