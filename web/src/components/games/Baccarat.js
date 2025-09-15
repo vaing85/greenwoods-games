@@ -78,18 +78,7 @@ const Baccarat = () => {
     setSelectedBet(null);
   };
 
-  const getCardValue = (card) => {
-    if (!card) return 0;
-    const value = card.split(' ')[0];
-    if (['J', 'Q', 'K'].includes(value)) return 0;
-    if (value === 'A') return 1;
-    return parseInt(value);
-  };
 
-  const calculateHandTotal = (cards) => {
-    const total = cards.reduce((sum, card) => sum + getCardValue(card), 0);
-    return total % 10;
-  };
 
   const getCardSuit = (card) => {
     if (!card) return '♠';

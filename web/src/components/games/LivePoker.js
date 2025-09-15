@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { createSocket } from '../../utils/socket';
 import './LivePoker.css';
@@ -13,6 +13,18 @@ const LivePoker = () => {
   const [chatInput, setChatInput] = useState('');
   const [showCreateRoom, setShowCreateRoom] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
+
+  const loadAvailableRooms = useCallback(() => {
+    if (socket) {
+      socket.emit('get_available_rooms', { gameType: 'texas-holdem' });
+    }
+  }, [socket]);
+
+  const joinChatRoom = useCallback((roomId) => {
+    if (socket) {
+      socket.emit('join_chat', { roomId, roomType: 'poker' });
+    }
+  }, [socket]);
 
   // Initialize socket connection
   useEffect(() => {
@@ -77,19 +89,7 @@ const LivePoker = () => {
         newSocket.close();
       };
     }
-  }, [user, token]);
-
-  const loadAvailableRooms = () => {
-    if (socket) {
-      socket.emit('get_available_rooms', { gameType: 'texas-holdem' });
-    }
-  };
-
-  const joinChatRoom = (roomId) => {
-    if (socket) {
-      socket.emit('join_chat', { roomId, roomType: 'poker' });
-    }
-  };
+  }, [user, token, loadAvailableRooms, joinChatRoom]);
 
   const joinRoom = (roomId) => {
     if (socket) {

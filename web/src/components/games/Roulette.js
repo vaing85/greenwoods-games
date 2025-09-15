@@ -364,10 +364,6 @@ const Roulette = ({ socket }) => {
     }
   };
 
-  const getNumberColor = (number) => {
-    if (number === 0) return 'green';
-    return isRed(number) ? 'red' : 'black';
-  };
 
   return (
     <RouletteContainer>

@@ -80,19 +80,6 @@ const Craps = () => {
     return dots[die] || '⚀';
   };
 
-  const getBetDescription = (betType) => {
-    const descriptions = {
-      pass: 'Pass Line - Win on 7,11 (comeout) or point. Lose on 2,3,12 (comeout) or 7 (point)',
-      dontpass: "Don't Pass - Opposite of Pass Line",
-      field: 'Field - Win on 2,3,4,9,10,11,12. Pays 2:1 on 2,12',
-      any7: 'Any 7 - Win if next roll is 7. Pays 4:1',
-      anycraps: 'Any Craps - Win on 2,3,12. Pays 7:1',
-      yo: 'Yo (11) - Win if next roll is 11. Pays 15:1',
-      ace: 'Aces (2) - Win if next roll is 2. Pays 30:1',
-      boxcars: 'Boxcars (12) - Win if next roll is 12. Pays 30:1'
-    };
-    return descriptions[betType] || '';
-  };
 
   const getBetPayout = (betType) => {
     const payouts = {
