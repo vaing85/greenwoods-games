@@ -4,8 +4,8 @@ FROM node:18-alpine
 # Set working directory
 WORKDIR /app
 
-# Install serve globally for production
-RUN npm install -g serve
+# Install nginx for serving static files
+RUN apk add --no-cache nginx
 
 # Install curl for health checks
 RUN apk add --no-cache curl
@@ -35,6 +35,21 @@ COPY --chown=greenwood:nodejs healthcheck.js ./
 # Build the application (as non-root user)
 RUN npm run build
 
+# Create nginx configuration
+RUN echo 'server {' > /etc/nginx/http.d/default.conf && \
+    echo '    listen 3000;' >> /etc/nginx/http.d/default.conf && \
+    echo '    server_name localhost;' >> /etc/nginx/http.d/default.conf && \
+    echo '    root /app/build;' >> /etc/nginx/http.d/default.conf && \
+    echo '    index index.html;' >> /etc/nginx/http.d/default.conf && \
+    echo '    location / {' >> /etc/nginx/http.d/default.conf && \
+    echo '        try_files $uri $uri/ /index.html;' >> /etc/nginx/http.d/default.conf && \
+    echo '    }' >> /etc/nginx/http.d/default.conf && \
+    echo '    location /static/ {' >> /etc/nginx/http.d/default.conf && \
+    echo '        expires 1y;' >> /etc/nginx/http.d/default.conf && \
+    echo '        add_header Cache-Control "public, immutable";' >> /etc/nginx/http.d/default.conf && \
+    echo '    }' >> /etc/nginx/http.d/default.conf && \
+    echo '}' >> /etc/nginx/http.d/default.conf
+
 # Expose port
 EXPOSE 3000
 
@@ -42,5 +57,5 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD node healthcheck.js
 
-# Start application
-CMD ["serve", "-s", "build", "-l", "3000"]
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]
