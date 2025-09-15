@@ -59,15 +59,15 @@ try {
 
 # Update system packages
 Write-Host "📦 Updating system packages..." -ForegroundColor $Yellow
-ssh root@$ServerIP "apt update && apt upgrade -y"
+ssh root@$ServerIP "apt update; apt upgrade -y"
 
 # Install Docker
 Write-Host "🐳 Installing Docker..." -ForegroundColor $Yellow
-ssh root@$ServerIP "curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh"
+ssh root@$ServerIP "curl -fsSL https://get.docker.com -o get-docker.sh; sh get-docker.sh"
 
 # Install Docker Compose
 Write-Host "🐳 Installing Docker Compose..." -ForegroundColor $Yellow
-ssh root@$ServerIP "curl -L `"https://github.com/docker/compose/releases/download/v2.20.0/docker-compose-`$(uname -s)-`$(uname -m)`" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose"
+ssh root@$ServerIP "curl -L `"https://github.com/docker/compose/releases/download/v2.20.0/docker-compose-`$(uname -s)-`$(uname -m)`" -o /usr/local/bin/docker-compose; chmod +x /usr/local/bin/docker-compose"
 
 # Install Nginx
 Write-Host "🌐 Installing Nginx..." -ForegroundColor $Yellow
@@ -75,23 +75,23 @@ ssh root@$ServerIP "apt install -y nginx"
 
 # Create project directory
 Write-Host "📁 Creating project directory..." -ForegroundColor $Yellow
-ssh root@$ServerIP "mkdir -p /opt/greenwood-games && cd /opt/greenwood-games"
+ssh root@$ServerIP "mkdir -p /opt/greenwood-games; cd /opt/greenwood-games"
 
 # Copy project files
 Write-Host "📤 Copying project files..." -ForegroundColor $Yellow
-scp -r . root@$ServerIP:/opt/greenwood-games/
+scp -r . "root@${ServerIP}:/opt/greenwood-games/"
 
 # Set up environment
 Write-Host "⚙️ Setting up environment..." -ForegroundColor $Yellow
-ssh root@$ServerIP "cd /opt/greenwood-games && cp env.example .env"
+ssh root@$ServerIP "cd /opt/greenwood-games; cp env.example .env"
 
 # Build and start services
 Write-Host "🚀 Building and starting services..." -ForegroundColor $Yellow
-ssh root@$ServerIP "cd /opt/greenwood-games && docker-compose -f docker-compose.prod.yml up -d --build"
+ssh root@$ServerIP "cd /opt/greenwood-games; docker-compose -f docker-compose.prod.yml up -d --build"
 
 # Configure Nginx
 Write-Host "🌐 Configuring Nginx..." -ForegroundColor $Yellow
-ssh root@$ServerIP "cp /opt/greenwood-games/nginx/nginx-http.conf /etc/nginx/sites-available/default && systemctl restart nginx"
+ssh root@$ServerIP "cp /opt/greenwood-games/nginx/nginx-http.conf /etc/nginx/sites-available/default; systemctl restart nginx"
 
 # Wait for services to start
 Write-Host "⏳ Waiting for services to start..." -ForegroundColor $Yellow

@@ -24,7 +24,7 @@ ssh your-username@161.35.92.24
 wget https://raw.githubusercontent.com/vaing85/greenwoods-games/main/deploy-to-server.sh
 
 # Make it executable
-chmod +x deploy-to-server.sh
+
 
 # Run the deployment script
 sudo ./deploy-to-server.sh

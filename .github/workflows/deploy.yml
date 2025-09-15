@@ -1,86 +1,112 @@
-name: Deploy Greenwood Games
+name: 🚀 Deploy to Production Server
 
 on:
   push:
     branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+  workflow_dispatch: # Allow manual deployment
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    
-    - name: Install dependencies - Root
-      run: npm install
-    
-    - name: Install dependencies - Server
-      run: cd server && npm install
-    
-    - name: Install dependencies - Web
-      run: cd web && npm install
-    
-    - name: Install dependencies - Mobile
-      run: cd mobile && npm install
-    
-    - name: Lint code
-      run: |
-        cd server && npm run lint || true
-        cd ../web && npm run lint || true
-    
-    - name: Run tests
-      run: |
-        cd server && npm test || echo "No tests configured"
-        cd ../web && npm test || echo "No tests configured"
-    
-    - name: Build applications
-      run: |
-        cd web && npm run build || echo "Build not configured"
-
   deploy:
-    needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup Node.js
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🔧 Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20.x'
+        node-version: '18'
         cache: 'npm'
-    
-    - name: Install dependencies
+        
+    - name: 📦 Install dependencies
       run: |
-        npm install
-        cd server && npm install
-        cd ../web && npm install
-    
-    - name: Build for production
+        cd server && npm ci --only=production
+        cd ../web && npm ci --only=production
+        
+    - name: 🏗️ Build web application
       run: |
-        cd web && npm run build || echo "Build not configured"
-    
-    - name: Deploy to production
-      env:
-        DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-        DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-      run: |
-        echo "Deployment would happen here"
-        echo "Configure your deployment method:"
-        echo "- Docker Hub push"
-        echo "- Server deployment via SSH"
-        echo "- Cloud platform deployment"
+        cd web
+        npm run build
+        
+    - name: 📤 Deploy to server
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_PORT || 22 }}
+        script: |
+          # Create deployment directory
+          mkdir -p /opt/greenwood-games
+          cd /opt/greenwood-games
+          
+          # Stop existing services
+          docker-compose -f docker-compose.prod.yml down || true
+          
+    - name: 📁 Upload files
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_PORT || 22 }}
+        source: "."
+        target: "/opt/greenwood-games"
+        strip_components: 1
+        exclude: |
+          node_modules
+          .git
+          .github
+          *.md
+          deploy*.sh
+          deploy*.ps1
+          *.log
+          .env
+          .env.*
+          temp_deploy_*
+          
+    - name: 🚀 Start services
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_PORT || 22 }}
+        script: |
+          cd /opt/greenwood-games
+          
+          # Set up environment
+          cp env.example .env
+          
+          # Start services
+          docker-compose -f docker-compose.prod.yml up -d --build
+          
+          # Wait for services to be ready
+          sleep 30
+          
+          # Check service status
+          docker-compose -f docker-compose.prod.yml ps
+          
+          # Configure Nginx
+          cp nginx/nginx-http.conf /etc/nginx/sites-available/default
+          systemctl restart nginx
+          
+    - name: ✅ Health check
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_PORT || 22 }}
+        script: |
+          # Test web app
+          curl -f http://localhost || exit 1
+          echo "✅ Web app is running"
+          
+          # Test API
+          curl -f http://localhost:5000/health || exit 1
+          echo "✅ API is running"
+          
+          echo "🎉 Deployment successful!"
+          echo "🌐 Casino is live at: http://${{ secrets.SERVER_HOST }}"

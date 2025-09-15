@@ -22,15 +22,15 @@ COPY . .
 # Copy health check script
 COPY healthcheck.js ./
 
-# Build the application
+# Build the application (as root)
 RUN npm run build
 
 # Create non-root user for security
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S greenwood -u 1001
 
-# Change ownership of build directory
-RUN chown -R greenwood:nodejs /app/build
+# Change ownership of entire app directory
+RUN chown -R greenwood:nodejs /app
 
 # Switch to non-root user
 USER greenwood

@@ -8,6 +8,9 @@ yarn-error.log*
 /web/build/
 /web/dist/
 /server/dist/
+/mobile/dist/
+/mobile/.expo/
+/mobile/web-build/
 
 # Environment variables
 .env
@@ -15,6 +18,7 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+.env.*
 
 # Logs
 logs/
@@ -25,7 +29,7 @@ yarn-error.log*
 lerna-debug.log*
 
 # Runtime data
-pids/
+pids
 *.pid
 *.seed
 *.pid.lock
@@ -37,8 +41,19 @@ coverage/
 # nyc test coverage
 .nyc_output
 
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
 # Dependency directories
-node_modules/
 jspm_packages/
 
 # TypeScript cache
@@ -65,11 +80,7 @@ jspm_packages/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-.env.test
-
-# parcel-bundler cache (https://parceljs.org/)
+# parcel-bundler cache
 .cache
 .parcel-cache
 
@@ -91,13 +102,7 @@ public
 # Temporary folders
 tmp/
 temp/
-
-# Editor directories and files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+temp_deploy_*
 
 # OS generated files
 .DS_Store
@@ -108,23 +113,26 @@ temp/
 ehthumbs.db
 Thumbs.db
 
-# Mobile builds
-/mobile/dist/
-/mobile/.expo/
-/mobile/web-build/
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# Docker
-.dockerignore
-
-# Database
+# Database files
 *.db
 *.sqlite
 *.sqlite3
 
-# SSL certificates (if any)
+# SSL certificates
 *.pem
 *.key
 *.crt
+*.csr
+
+# Docker volumes
+docker-data/
 
 # Monitoring data
 /monitoring/data/
@@ -132,3 +140,21 @@ Thumbs.db
 # Backup files
 *.bak
 *.backup
+
+# Deployment scripts (keep in repo but ignore temp files)
+deploy-*.log
+deploy-*.tmp
+
+# Mobile specific
+/mobile/android/
+/mobile/ios/
+/mobile/.expo/
+/mobile/web-build/
+
+# Package manager lock files (keep package-lock.json, ignore others)
+yarn.lock
+pnpm-lock.yaml
+
+# Local development
+.local
+.cache
