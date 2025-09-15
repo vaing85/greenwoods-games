@@ -95,25 +95,25 @@ Remove-Item -Path $TempDir -Recurse -Force
 
 # Set up environment file
 Write-Host "${Yellow}⚙️  Setting up environment...${NC}" -ForegroundColor Yellow
-ssh $ServerUser@$ServerIP "cd $ServerPath && cp env.example .env"
+ssh $ServerUser@$ServerIP "cd $ServerPath; cp env.example .env"
 
 # Start services
 Write-Host "${Yellow}🚀 Starting services...${NC}" -ForegroundColor Yellow
-ssh $ServerUser@$ServerIP "cd $ServerPath && docker-compose -f docker-compose.prod.yml up -d --build"
+ssh $ServerUser@$ServerIP "cd $ServerPath; docker-compose -f docker-compose.prod.yml up -d --build"
 
 # Check service status
 Write-Host "${Yellow}🔍 Checking service status...${NC}" -ForegroundColor Yellow
-ssh $ServerUser@$ServerIP "cd $ServerPath && docker-compose -f docker-compose.prod.yml ps"
+ssh $ServerUser@$ServerIP "cd $ServerPath; docker-compose -f docker-compose.prod.yml ps"
 
 # Configure Nginx
 Write-Host "${Yellow}🌐 Configuring Nginx...${NC}" -ForegroundColor Yellow
-ssh $ServerUser@$ServerIP "cd $ServerPath && cp nginx/nginx-http.conf /etc/nginx/sites-available/default && systemctl restart nginx"
+ssh $ServerUser@$ServerIP "cd $ServerPath; cp nginx/nginx-http.conf /etc/nginx/sites-available/default; systemctl restart nginx"
 
 # Final status check
 Write-Host "${Yellow}🔍 Final status check...${NC}" -ForegroundColor Yellow
 Write-Host "Checking if services are running:"
-$webCheck = ssh $ServerUser@$ServerIP "curl -s http://localhost > /dev/null && echo 'Web app is running' || echo 'Web app is not responding'"
-$apiCheck = ssh $ServerUser@$ServerIP "curl -s http://localhost:5000/health > /dev/null && echo 'API is running' || echo 'API is not responding'"
+$webCheck = ssh $ServerUser@$ServerIP 'curl -s http://localhost > /dev/null; if ($?) { echo "Web app is running" } else { echo "Web app is not responding" }'
+$apiCheck = ssh $ServerUser@$ServerIP 'curl -s http://localhost:5000/health > /dev/null; if ($?) { echo "API is running" } else { echo "API is not responding" }'
 
 if ($webCheck -like "*running*") {
     Write-Host "  ✅ Web app is running" -ForegroundColor Green
@@ -128,9 +128,9 @@ if ($apiCheck -like "*running*") {
 }
 
 Write-Host ""
-Write-Host "${Green}🎉 Deployment completed!${NC}" -ForegroundColor Green
-Write-Host "${Green}Your casino is now live at: http://$ServerIP${NC}" -ForegroundColor Green
-Write-Host "${Green}API Health: http://$ServerIP:5000/health${NC}" -ForegroundColor Green
-Write-Host "${Green}Monitoring: http://$ServerIP:3001${NC}" -ForegroundColor Green
+Write-Host "Deployment completed!" -ForegroundColor Green
+Write-Host "Your casino is now live at: http://$ServerIP" -ForegroundColor Green
+Write-Host "API Health: http://$ServerIP:5000/health" -ForegroundColor Green
+Write-Host "Monitoring: http://$ServerIP:3001" -ForegroundColor Green
 Write-Host ""
-Write-Host "${Blue}🎰 Your casino empire is ready to launch! 🎰💰🚀${NC}" -ForegroundColor Blue
+Write-Host "Your casino empire is ready to launch!" -ForegroundColor Blue
