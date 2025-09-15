@@ -16,24 +16,24 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install --legacy-peer-deps
 
+# Create non-root user for security
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S greenwood -u 1001
+
 # Copy application code
 COPY . .
 
 # Copy health check script
 COPY healthcheck.js ./
 
-# Build the application (as root)
-RUN npm run build
-
-# Create non-root user for security
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S greenwood -u 1001
-
 # Change ownership of entire app directory
 RUN chown -R greenwood:nodejs /app
 
 # Switch to non-root user
 USER greenwood
+
+# Build the application (as non-root user)
+RUN npm run build
 
 # Expose port
 EXPOSE 3000
